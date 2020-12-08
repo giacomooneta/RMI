@@ -1,8 +1,12 @@
+package client;
+
+import shared.Contatto;
+import shared.InterfacciaR;
 
 import java.awt.event.*;
 
-//import server.Contatto;
-//import server.InterfacciaR;
+//import server.shared.Contatto;
+//import server.shared.InterfacciaR;
 
 import java.awt.*;
 import java.net.MalformedURLException;
@@ -252,8 +256,8 @@ class Client extends JFrame{
             Error error = new Error();
             error.pack();
             error.setVisible(true);
-        } /*if(nome.equals("")){
-            ArrayList<Contatto> appoggio = new ArrayList<>();
+        } if(nome.equals("")){
+            ArrayList<shared.Contatto> appoggio = new ArrayList<>();
             for (int i = 0; i<lista.size();i++){
                 if(numero.equals(lista.get(i).getNum())){
                     appoggio.add(lista.get(i));
@@ -262,7 +266,7 @@ class Client extends JFrame{
             fillTable(appoggio,tabella);
         }else
         if(numero.equals("")){
-            ArrayList<Contatto> appoggio = new ArrayList<>();
+            ArrayList<shared.Contatto> appoggio = new ArrayList<>();
             for (int i = 0; i<lista.size();i++){
                 if(nome.equals(lista.get(i).getNome())){
                     appoggio.add(lista.get(i));
@@ -270,16 +274,21 @@ class Client extends JFrame{
             }
             fillTable(appoggio,tabella);
         }
-        */
-        List<Contatto> appoggio = null;
+        else{
+            fillTable(lista,tabella);
+            Error2 error2 = new Error2();
+            error2.pack();
+            error2.setVisible(true);
+        }
+        /*List<Contatto> appoggio = new ArrayList<>();
         for(int i=0; i<lista.size();i++){
-            if(lista.get(i).numt.equals(textField2.getText()) && textField3.getText().isEmpty()){
+            if(lista.get(i).getNum().equals(textField2.getText()) && textField3.getText().isEmpty()){
                 appoggio.add(lista.get(i));
             }
-            if(lista.get(i).nome.equals(textField3.getText()) && textField2.getText().isEmpty()){
+            if(lista.get(i).getNome().equals(textField3.getText()) && textField2.getText().isEmpty()){
                 appoggio.add(lista.get(i));
             }
-            if(lista.get(i).numt.equals(textField2.getText()) && lista.get(i).nome.equals(textField3.getText())){
+            if(lista.get(i).getNum().equals(textField2.getText()) && lista.get(i).getNome().equals(textField3.getText())){
                 appoggio.add(lista.get(i));
             }
         }
@@ -288,7 +297,7 @@ class Client extends JFrame{
             Error2 error2 = new Error2();
             error2.pack();
             error2.setVisible(true);
-        }
+        }*/
     }
 
 }
