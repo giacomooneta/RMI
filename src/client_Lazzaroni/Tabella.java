@@ -1,5 +1,6 @@
 package client_Lazzaroni;
 
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import net.miginfocom.swing.*;
@@ -28,20 +29,28 @@ public class Tabella extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    private void button1ActionPerformed(ActionEvent e) {
+        new Client_Lazzaroni().setVisible(true);
+        this.dispose();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Lazzaroni Luca
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
+        button1 = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
         contentPane.setLayout(new MigLayout(
             "hidemode 3",
             // columns
+            "[120,fill]" +
+            "[fill]" +
             "[120,fill]",
             // rows
-            "[]"));
+            "[28]"));
 
         //======== scrollPane1 ========
         {
@@ -57,6 +66,11 @@ public class Tabella extends JFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1, "cell 0 0");
+
+        //---- button1 ----
+        button1.setText("Esci");
+        button1.addActionListener(e -> button1ActionPerformed(e));
+        contentPane.add(button1, "cell 2 0");
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -66,6 +80,7 @@ public class Tabella extends JFrame {
     // Generated using JFormDesigner Evaluation license - Lazzaroni Luca
     private JScrollPane scrollPane1;
     private JTable table1;
+    private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     public void riempi(List<Contatto> lista, JTable table){
         for(int i = 0;i<lista.size();i++){
