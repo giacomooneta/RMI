@@ -26,7 +26,8 @@ import javax.swing.table.*;
 class Client extends JFrame{
     List<Contatto> lista;
     InterfacciaR echoService = (InterfacciaR) Naming.lookup("ServizioRubrica");
-
+    int row;
+    boolean click=false;
     public Client() throws RemoteException, NotBoundException, MalformedURLException {
         initComponents();
         setContentPane(finestra);
@@ -43,17 +44,41 @@ class Client extends JFrame{
             lista = echoService.getContatti();
             fillTable(lista,tabella);
         }
-        else
-            System.out.println("Error");
+        else {
+
+            JOptionPane optionPane = new JOptionPane("Errore nella creazione del contatto, controllare il corretto inserimento dei parametri", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Failure");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+
+        }
     }
 
     private void button5ActionPerformed(ActionEvent e) throws RemoteException {
+
+        if(tabella.getSelectedRow()!= -1){
+            echoService.remove((String) tabella.getValueAt(tabella.getSelectedRow(),1));
+            lista = echoService.getContatti();
+            fillTable(lista,tabella);
+        }
+        else
         if(echoService.remove(textField3.getText()) == true){
             lista = echoService.getContatti();
             fillTable(lista,tabella);
         }
         else{
-            System.out.println("Error");
+            if(textField2.getText().isEmpty()){
+                JOptionPane optionPane = new JOptionPane("Errore nell'eliminazione del contatto, controllare i campi di inseirmento", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Failure");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }
+            else {
+                JOptionPane optionPane = new JOptionPane("Non sono stati trovati contatti con numero" + textField2.getText(), JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Failure");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }
         }
     }
 
@@ -83,13 +108,13 @@ class Client extends JFrame{
         //======== finestra ========
         {
             finestra.setBorder(new EmptyBorder(12, 12, 12, 12));
-            finestra.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
-                    . border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax. swing. border. TitledBorder
-                    . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .
-                    awt .Font .BOLD ,12 ), java. awt. Color. red) ,finestra. getBorder( )) )
-            ; finestra. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-        ) {if ("bord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
-        ;
+            finestra.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing
+            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+            ) ,finestra. getBorder () ) ); finestra. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName (
+            ) ) )throw new RuntimeException( ) ;} } );
             finestra.setLayout(new BorderLayout());
 
             //======== contentPanel ========
@@ -100,11 +125,11 @@ class Client extends JFrame{
 
                     //---- tabella ----
                     tabella.setModel(new DefaultTableModel(
-                            new Object[][] {
-                            },
-                            new String[] {
-                                    "Nome", "Numero"
-                            }
+                        new Object[][] {
+                        },
+                        new String[] {
+                            "Nome", "Numero"
+                        }
                     ));
                     scrollPane1.setViewportView(tabella);
                 }
@@ -138,49 +163,45 @@ class Client extends JFrame{
                 });
 
                 //---- textField2 ----
-                textField2.setToolTipText("Numero");
-                textField2.setText("Nome");
+                textField2.setToolTipText("Nome");
 
                 //---- textField3 ----
-                textField3.setToolTipText("Nome");
-                textField3.setText("Numero");
+                textField3.setToolTipText("Numero");
 
                 GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
                 contentPanel.setLayout(contentPanelLayout);
                 contentPanelLayout.setHorizontalGroup(
-                        contentPanelLayout.createParallelGroup()
+                    contentPanelLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
+                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
                                 .addGroup(contentPanelLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(contentPanelLayout.createParallelGroup()
-                                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                                        .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
-                                                        .addContainerGap())
-                                                .addGroup(GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
-                                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                                                        .addComponent(button6)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(button5)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(button4)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(button3))))
+                                    .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                    .addComponent(button6)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(button5)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(button4)
+                                    .addGap(23, 23, 23)
+                                    .addComponent(button3)))
+                            .addContainerGap())
                 );
                 contentPanelLayout.setVerticalGroup(
-                        contentPanelLayout.createParallelGroup()
-                                .addGroup(contentPanelLayout.createSequentialGroup()
-                                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                .addComponent(button3)
-                                                .addComponent(button4)
-                                                .addComponent(button5)
-                                                .addComponent(button6)
-                                                .addComponent(textField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addContainerGap())
+                    contentPanelLayout.createParallelGroup()
+                        .addGroup(contentPanelLayout.createSequentialGroup()
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button6)
+                                .addComponent(button5)
+                                .addComponent(button4)
+                                .addComponent(button3)
+                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addContainerGap())
                 );
             }
             finestra.add(contentPanel, BorderLayout.CENTER);
@@ -253,9 +274,10 @@ class Client extends JFrame{
     public void search(String nome, String numero) {
         if (nome.equals("") && numero.equals("")) {
             fillTable(lista, tabella);
-            Error error = new Error();
-            error.pack();
-            error.setVisible(true);
+            JOptionPane optionPane = new JOptionPane("Compilare i campi prima di esguire la ricerca", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Failure");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
         }else if(nome.equals("")){
             ArrayList<shared.Contatto> appoggio = new ArrayList<>();
             for (int i = 0; i<lista.size();i++){
@@ -276,9 +298,10 @@ class Client extends JFrame{
         }
         else{
             fillTable(lista,tabella);
-            Error2 error2 = new Error2();
-            error2.pack();
-            error2.setVisible(true);
+            JOptionPane optionPane = new JOptionPane("La ricerca può essere eseguita solo per 1 dei 2 parametri (nome/numero)", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Failure");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
         }
         /*List<Contatto> appoggio = new ArrayList<>();
         for(int i=0; i<lista.size();i++){

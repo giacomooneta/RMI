@@ -9,8 +9,8 @@ new FormModel {
 				name: "finestra"
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq {space :::p, par l {seq l {comp scrollPane1::::852:x, space :::p}, seq t {comp textField3:::p:219:p, space :::p, comp textField2:::p:220:p, space ::42:x, comp button6:::p::p, space s:::p, comp button5:::p::p, space s:::p, comp button4:::p::p, space s:::p, comp button3:::p::p}}}}"
-					"$verticalGroup": "par l {seq l {comp scrollPane1:::p:380:p, space :::x, par b {comp button3::b:p::p, comp button4::b:p::p, comp button5::b:p::p, comp button6::b:p::p, comp textField3::b:p::p, comp textField2::b:p::p}, space :::p}}"
+					"$horizontalGroup": "par l {seq t {par t {comp scrollPane1::::858:x, seq {comp textField2:::p:220:p, space u:::p, comp textField3:::p:219:p, space ::31:x, comp button6:::p::p, space s:::p, comp button5:::p::p, space s:::p, comp button4:::p::p, space :p:23:p, comp button3:::p::p}}, space :::p}}"
+					"$verticalGroup": "par l {seq l {comp scrollPane1:::p:380:p, space :::x, par b {comp button6::b:p::p, comp button5::b:p::p, comp button4::b:p::p, comp button3::b:p::p, comp textField2::b:p::p, comp textField3::b:p::p}, space :::p}}"
 				} ) {
 					name: "contentPanel"
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -30,7 +30,6 @@ new FormModel {
 								add( null )
 								add( null )
 							} )
-							"enabled": false
 						} )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
@@ -55,11 +54,11 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "textField2"
-						"text": "Nome"
+						"toolTipText": "Nome"
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "textField3"
-						"text": "Numero"
+						"toolTipText": "Numero"
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"
