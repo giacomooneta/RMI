@@ -50,7 +50,7 @@ public class Tabella extends JFrame {
             "[fill]" +
             "[120,fill]",
             // rows
-            "[28]"));
+            "[256]"));
 
         //======== scrollPane1 ========
         {
