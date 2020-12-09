@@ -1,4 +1,4 @@
-package client;
+package client_Oneta;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;

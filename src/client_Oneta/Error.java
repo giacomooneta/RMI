@@ -1,4 +1,4 @@
-package client;
+package client_Oneta;
 
 import java.awt.*;
 import java.awt.event.*;

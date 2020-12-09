@@ -1,4 +1,4 @@
-package client;
+package client_Oneta;
 
 import shared.Contatto;
 import shared.InterfacciaR;
@@ -256,7 +256,7 @@ class Client extends JFrame{
             Error error = new Error();
             error.pack();
             error.setVisible(true);
-        } if(nome.equals("")){
+        }else if(nome.equals("")){
             ArrayList<shared.Contatto> appoggio = new ArrayList<>();
             for (int i = 0; i<lista.size();i++){
                 if(numero.equals(lista.get(i).getNum())){
