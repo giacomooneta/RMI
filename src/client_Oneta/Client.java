@@ -39,45 +39,62 @@ class Client extends JFrame{
         System.exit(1);
     }
 
-    private void button6ActionPerformed(ActionEvent e) throws RemoteException {
-        if(echoService.add(createContatto(textField2.getText(),textField3.getText())) == true){
-            lista = echoService.getContatti();
-            fillTable(lista,tabella);
-        }
-        else {
+    private void button6ActionPerformed(ActionEvent e){
+        try {
+            if(echoService.add(createContatto(textField2.getText(),textField3.getText())) == true){
+                lista = echoService.getContatti();
+                fillTable(lista,tabella);
+            }
+            else {
 
-            JOptionPane optionPane = new JOptionPane("Errore nella creazione del contatto, controllare il corretto inserimento dei parametri", JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Failure");
-            dialog.setAlwaysOnTop(true);
-            dialog.setVisible(true);
+                JOptionPane optionPane = new JOptionPane("Errore nella creazione del contatto, controllare il corretto inserimento dei parametri", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Failure");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
+            }
+        } catch (RemoteException remoteException) {
+            remoteException.printStackTrace();
         }
     }
 
-    private void button5ActionPerformed(ActionEvent e) throws RemoteException {
+    private void button5ActionPerformed(ActionEvent e) {
 
         if(tabella.getSelectedRow()!= -1){
-            echoService.remove((String) tabella.getValueAt(tabella.getSelectedRow(),1));
-            lista = echoService.getContatti();
-            fillTable(lista,tabella);
-        }
-        else
-        if(echoService.remove(textField3.getText()) == true){
-            lista = echoService.getContatti();
-            fillTable(lista,tabella);
-        }
-        else{
-            if(textField2.getText().isEmpty()){
-                JOptionPane optionPane = new JOptionPane("Errore nell'eliminazione del contatto, controllare i campi di inseirmento", JOptionPane.ERROR_MESSAGE);
-                JDialog dialog = optionPane.createDialog("Failure");
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
+            try {
+                echoService.remove((String) tabella.getValueAt(tabella.getSelectedRow(),1));
+            } catch (RemoteException remoteException) {
+                remoteException.printStackTrace();
             }
-            else {
-                JOptionPane optionPane = new JOptionPane("Non sono stati trovati contatti con numero" + textField2.getText(), JOptionPane.ERROR_MESSAGE);
-                JDialog dialog = optionPane.createDialog("Failure");
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
+            try {
+                lista = echoService.getContatti();
+            } catch (RemoteException remoteException) {
+                remoteException.printStackTrace();
+            }
+            fillTable(lista,tabella);
+        }
+        else {
+            try {
+                if(echoService.remove(textField3.getText()) == true){
+                    lista = echoService.getContatti();
+                    fillTable(lista,tabella);
+                }
+                else{
+                    if(textField2.getText().isEmpty()){
+                        JOptionPane optionPane = new JOptionPane("Errore nell'eliminazione del contatto, controllare i campi di inseirmento", JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Failure");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    }
+                    else {
+                        JOptionPane optionPane = new JOptionPane("Non sono stati trovati contatti con numero" + textField2.getText(), JOptionPane.ERROR_MESSAGE);
+                        JDialog dialog = optionPane.createDialog("Failure");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    }
+                }
+            } catch (RemoteException remoteException) {
+                remoteException.printStackTrace();
             }
         }
     }
@@ -108,13 +125,12 @@ class Client extends JFrame{
         //======== finestra ========
         {
             finestra.setBorder(new EmptyBorder(12, 12, 12, 12));
-            finestra.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing
-            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-            ) ,finestra. getBorder () ) ); finestra. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName (
-            ) ) )throw new RuntimeException( ) ;} } );
+            finestra.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .
+            EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax . swing
+            . border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,
+            java . awt. Color .red ) ,finestra. getBorder () ) ); finestra. addPropertyChangeListener( new java. beans .PropertyChangeListener ( )
+            { @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName () ) )
+            throw new RuntimeException( ) ;} } );
             finestra.setLayout(new BorderLayout());
 
             //======== contentPanel ========
@@ -144,23 +160,11 @@ class Client extends JFrame{
 
                 //---- button5 ----
                 button5.setText("Rimuovi");
-                button5.addActionListener(e -> {
-                    try {
-                        button5ActionPerformed(e);
-                    } catch (RemoteException remoteException) {
-                        remoteException.printStackTrace();
-                    }
-                });
+                button5.addActionListener(e -> button5ActionPerformed(e));
 
                 //---- button6 ----
                 button6.setText("Aggiungi");
-                button6.addActionListener(e -> {
-                    try {
-                        button6ActionPerformed(e);
-                    } catch (RemoteException remoteException) {
-                        remoteException.printStackTrace();
-                    }
-                });
+                button6.addActionListener(e -> button6ActionPerformed(e));
 
                 //---- textField2 ----
                 textField2.setToolTipText("Nome");
